@@ -79,8 +79,7 @@ def time_stats(df):
     print("\nCalculating The Most Frequent Times of Travel...\n")
     start_time = time.time()
 
-    # TO DO: Display the most common month
-    
+    # TO DO: Display the most common month 
     monthsOccurences = pd.to_datetime(df['Start Time']).dt.month_name().str.lower().value_counts() # Get the occurences of each month
     maxMonth = monthsOccurences.idxmax() # Get the most common month, which is the id of the max value
     maxMonthCount = monthsOccurences.max() # Get the max value
@@ -112,10 +111,26 @@ def station_stats(df):
     start_time = time.time()
 
     # TO DO: Display most commonly used start station
+    startStationOccurences = df['Start Station'].value_counts()
+    maxStartStation = startStationOccurences.idxmax() # Get the most common start station, which is the id of the max value
+    maxStartStationCount = startStationOccurences.max() # Get the max value
+    
+    print(f"The most common start station is {maxStartStation} with {maxStartStationCount} trips.")
 
     # TO DO: Display most commonly used end station
+    endStationOccurences = df['End Station'].value_counts()
+    maxEndStation = endStationOccurences.idxmax() # Get the most common end station, which is the id of the max value
+    maxEndStationCount = endStationOccurences.max() # Get the max value
+    
+    print(f"The most common end station is {maxEndStation} with {maxEndStationCount} trips.")
 
     # TO DO: Display most frequent combination of start station and end station trip
+    stationCombination = df['Start Station'] + " -> " + df['End Station']
+    stationCombinationOccurences = stationCombination.value_counts()
+    maxStationCombination = stationCombinationOccurences.idxmax() # Get the most common station combination, which is the id of the max value
+    maxStationCombinationCount = stationCombinationOccurences.max() # Get the max value
+    
+    print(f"The most common station combination is {maxStationCombination} with {maxStationCombinationCount} trips.")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
