@@ -79,12 +79,15 @@ def time_stats(df):
     print("\nCalculating The Most Frequent Times of Travel...\n")
     start_time = time.time()
 
+    results = {}
+
     # TO DO: Display the most common month 
     monthsOccurences = pd.to_datetime(df['Start Time']).dt.month_name().str.lower().value_counts() # Get the occurences of each month
     maxMonth = monthsOccurences.idxmax() # Get the most common month, which is the id of the max value
     maxMonthCount = monthsOccurences.max() # Get the max value
     
     print(f"The most common month is {maxMonth} with {maxMonthCount} trips.")
+    results["mostCommonMonth"] = maxMonth
     
     # TO DO: Display the most common day of week
     dayOccurences = pd.to_datetime(df['Start Time']).dt.day_name().str.lower().value_counts()
@@ -92,6 +95,7 @@ def time_stats(df):
     maxDayCount = dayOccurences.max() # Get the max value
     
     print(f"The most common day is {maxDay} with {maxDayCount} trips.")
+    results["mostCommonDay"] = maxDay
 
     # TO DO: Display the most common start hour
     hourOccurences = pd.to_datetime(df['Start Time']).dt.hour.value_counts()
@@ -99,9 +103,12 @@ def time_stats(df):
     maxHourCount = hourOccurences.max() # Get the max value
     
     print(f"The most common hour is {maxHour}H with {maxHourCount} trips.")
+    results["mostCommonHour"] = maxHour
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
+    
+    return results
 
 
 def station_stats(df):
@@ -110,12 +117,15 @@ def station_stats(df):
     print("\nCalculating The Most Popular Stations and Trip...\n")
     start_time = time.time()
 
+    results = {}
+
     # TO DO: Display most commonly used start station
     startStationOccurences = df['Start Station'].value_counts()
     maxStartStation = startStationOccurences.idxmax() # Get the most common start station, which is the id of the max value
     maxStartStationCount = startStationOccurences.max() # Get the max value
     
     print(f"The most common start station is {maxStartStation} with {maxStartStationCount} trips.")
+    results["mostCommonStartStation"] = maxStartStation
 
     # TO DO: Display most commonly used end station
     endStationOccurences = df['End Station'].value_counts()
@@ -123,6 +133,7 @@ def station_stats(df):
     maxEndStationCount = endStationOccurences.max() # Get the max value
     
     print(f"The most common end station is {maxEndStation} with {maxEndStationCount} trips.")
+    results["mostCommonEndStation"] = maxEndStation
 
     # TO DO: Display most frequent combination of start station and end station trip
     stationCombination = df['Start Station'] + " -> " + df['End Station']
@@ -131,9 +142,12 @@ def station_stats(df):
     maxStationCombinationCount = stationCombinationOccurences.max() # Get the max value
     
     print(f"The most common station combination is {maxStationCombination} with {maxStationCombinationCount} trips.")
+    results["mostCommonStationCombination"] = maxStationCombination
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
+
+    return results
 
 
 def trip_duration_stats(df):
@@ -171,16 +185,22 @@ def trip_duration_stats(df):
     print("\nCalculating Trip Duration...\n")
     start_time = time.time()
 
+    results = {}
+
     # TO DO: Display total travel time
     totalTravelTime = df['Trip Duration'].sum()
     print(f"The total travel time is {seconds_to_human_readable(int(totalTravelTime))}.")
+    results["totalTravelTime"] = totalTravelTime
 
     # TO DO: Display mean travel time
     meanTravelTime = df['Trip Duration'].mean()
     print(f"The mean travel time is {seconds_to_human_readable(int(meanTravelTime))} seconds.")
+    results["meanTravelTime"] = meanTravelTime
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
+    
+    return results
 
 
 def user_stats(df):
@@ -188,21 +208,28 @@ def user_stats(df):
 
     print("\nCalculating User Stats...\n")
     start_time = time.time()
+    
+    results = {}
 
     # TO DO: Display counts of user types
     userTypeOccurences = df['User Type'].value_counts()
+    results["userTypeOccurences"] = {}
     print("User types:")
     for userType, count in userTypeOccurences.items():
         print(f"\tThere are {count} {userType} users.")
+        results["userTypeOccurences"][userType] = count
 
     # TO DO: Display counts of gender
     if 'Gender' in df.columns:
         genderOccurences = df['Gender'].value_counts()
+        results["genderOccurences"] = {}
         print("User genders:")
         for gender, count in genderOccurences.items():
             print(f"\tThere are {count} {gender} users.")
+            results["genderOccurences"][gender] = count
     else:
         print("No gender data available.")
+        results["genderOccurences"] = None
         
     # TO DO: Display earliest, most recent, and most common year of birth
     if 'Birth Year' in df.columns:
@@ -213,8 +240,15 @@ def user_stats(df):
         print(f"The earliest birth year is {earliestBirthYear}.")
         print(f"The most recent birth year is {mostRecentBirthYear}.")
         print(f"The most common birth year is {mostCommonBirthYear}.")
+        
+        results["earliestBirthYear"] = earliestBirthYear
+        results["mostRecentBirthYear"] = mostRecentBirthYear
+        results["mostCommonBirthYear"] = mostCommonBirthYear
     else:
         print("No birth year data available.")
+        results["earliestBirthYear"] = None
+        results["mostRecentBirthYear"] = None
+        results["mostCommonBirthYear"] = None
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
