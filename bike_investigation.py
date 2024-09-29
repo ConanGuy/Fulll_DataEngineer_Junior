@@ -22,6 +22,16 @@ def get_filters():
     print("Hello! Let's explore some bikeshare data!")
     
     def get_input(prompt: str, possible_values: list) -> str:
+        """
+        Get input from the user and validate it against a list of possible values.
+        
+        Args:
+            prompt (str): The message to display to the user.
+            possible_values (str): A list of possible values the user can input.
+            
+        Returns:
+            value (str): The user's input.
+        """
         while True:
             value = input(prompt).lower()
 
@@ -32,9 +42,9 @@ def get_filters():
         
         return value
     
-    city = get_input("Choose a city to analyze: Chicago, New York City, Washington\n", CITY_DATA.keys())
-    month = get_input("Choose a month to analyze: all, january, february, ... , june\n", ["all", "january", "february", "march", "april", "may", "june"])
-    day = get_input("Choose a day to analyze: all, monday, tuesday, ... sunday\n", ["all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"])
+    city = get_input("Choose a city to analyze: Chicago, New York City, Washington\n", CITY_DATA.keys()) # Get the city
+    month = get_input("Choose a month to analyze: all, january, february, ... , june\n", ["all", "january", "february", "march", "april", "may", "june"]) # Get the month
+    day = get_input("Choose a day to analyze: all, monday, tuesday, ... sunday\n", ["all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]) # Get the day
 
     print("-" * 40)
     return city, month , day
