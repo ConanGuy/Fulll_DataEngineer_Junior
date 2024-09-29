@@ -61,7 +61,15 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-
+    
+    df = pd.read_csv(CITY_DATA[city]) # Load the data
+    
+    # Filter by month and day
+    if month != "all":
+        df = df[pd.to_datetime(df['Start Time']).dt.month_name().str.lower() == month]
+    if day != "all":
+        df = df[pd.to_datetime(df['Start Time']).dt.day_name().str.lower() == day]
+    
     return df
 
 
@@ -129,7 +137,7 @@ def user_stats(df):
 
 def main():
     while True:
-        city, month, day = get_filters()
+        city, month, day = "chicago", "february", "friday"# get_filters()
         df = load_data(city, month, day)
 
         time_stats(df)
