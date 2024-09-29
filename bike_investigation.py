@@ -21,13 +21,39 @@ def get_filters():
     """
     print("Hello! Let's explore some bikeshare data!")
     # TO DO: get user input for city (chicago, new york city, washington).
+    city: str = ""
+    while True:
+        city = input("Choose a city to analyze: Chicago, New York City, Washington\n").lower()
+
+        if city in CITY_DATA:
+            break
+        
+        print("Invalid city name. Please try again.")
 
     # TO DO: get user input for month (all, january, february, ... , june)
+    possible_months: list = ["all", "january", "february", "march", "april", "may", "june"]
+    month: str = ""
+    while True:
+        month = input("Choose a month to analyze: all, january, february, ... , june\n").lower()
+
+        if month in possible_months:
+            break
+        
+        print("Invalid month name. Please try again.")
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
+    possible_days: list = ["all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    day: str = ""
+    while True:
+        day = input("Choose a day to analyze: all, monday, tuesday, ... sunday\n").lower()
+
+        if day in possible_days:
+            break
+        
+        print("Invalid day name. Please try again.")
 
     print("-" * 40)
-    return city, month, day
+    return city, month , day
 
 
 def load_data(city, month, day):
