@@ -80,10 +80,26 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: Display the most common month
-
+    
+    monthsOccurences = pd.to_datetime(df['Start Time']).dt.month_name().str.lower().value_counts() # Get the occurences of each month
+    maxMonth = monthsOccurences.idxmax() # Get the most common month, which is the id of the max value
+    maxMonthCount = monthsOccurences.max() # Get the max value
+    
+    print(f"The most common month is {maxMonth} with {maxMonthCount} trips.")
+    
     # TO DO: Display the most common day of week
+    dayOccurences = pd.to_datetime(df['Start Time']).dt.day_name().str.lower().value_counts()
+    maxDay = dayOccurences.idxmax() # Get the most common day, which is the id of the max value
+    maxDayCount = dayOccurences.max() # Get the max value
+    
+    print(f"The most common day is {maxDay} with {maxDayCount} trips.")
 
     # TO DO: Display the most common start hour
+    hourOccurences = pd.to_datetime(df['Start Time']).dt.hour.value_counts()
+    maxHour = hourOccurences.idxmax() # Get the most common hour, which is the id of the max value
+    maxHourCount = hourOccurences.max() # Get the max value
+    
+    print(f"The most common hour is {maxHour}H with {maxHourCount} trips.")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
@@ -137,7 +153,7 @@ def user_stats(df):
 
 def main():
     while True:
-        city, month, day = "chicago", "february", "friday"# get_filters()
+        city, month, day = get_filters()
         df = load_data(city, month, day)
 
         time_stats(df)
