@@ -138,13 +138,46 @@ def station_stats(df):
 
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
+    
+    def seconds_to_human_readable(seconds: int) -> str:
+        """
+        Convert seconds to a human readable format.
+        
+        Args:
+            seconds (int): The number of seconds to convert.
+            
+        Returns:
+            human_readable (str): The human readable format of the seconds.
+        """
+        
+        humanReadable = ""
+        
+        years, seconds = seconds // 31536000, seconds % 31536000
+        if years > 0: humanReadable += f"{years}Y "
+        
+        days, seconds = seconds // 86400, seconds % 86400
+        if days > 0 or humanReadable != "": humanReadable += f"{days}D "
+        
+        hours, seconds = seconds // 3600, seconds % 3600
+        if hours > 0 or humanReadable != "": humanReadable += f"{hours}H "
+        
+        minutes, seconds = seconds // 60, seconds % 60
+        if minutes > 0 or humanReadable != "": humanReadable += f"{minutes}M "
+        
+        humanReadable += f"{seconds}S"
+        
+        return humanReadable
 
     print("\nCalculating Trip Duration...\n")
     start_time = time.time()
 
     # TO DO: Display total travel time
+    totalTravelTime = df['Trip Duration'].sum()
+    print(f"The total travel time is {seconds_to_human_readable(totalTravelTime)}.")
 
     # TO DO: Display mean travel time
+    meanTravelTime = df['Trip Duration'].mean()
+    print(f"The mean travel time is {seconds_to_human_readable(int(meanTravelTime))} seconds.")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
