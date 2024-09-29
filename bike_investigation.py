@@ -20,37 +20,21 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print("Hello! Let's explore some bikeshare data!")
-    # TO DO: get user input for city (chicago, new york city, washington).
-    city: str = ""
-    while True:
-        city = input("Choose a city to analyze: Chicago, New York City, Washington\n").lower()
+    
+    def get_input(prompt: str, possible_values: list) -> str:
+        while True:
+            value = input(prompt).lower()
 
-        if city in CITY_DATA:
-            break
+            if value in possible_values:
+                break
+            
+            print("Invalid value. Please try again.")
         
-        print("Invalid city name. Please try again.")
-
-    # TO DO: get user input for month (all, january, february, ... , june)
-    possible_months: list = ["all", "january", "february", "march", "april", "may", "june"]
-    month: str = ""
-    while True:
-        month = input("Choose a month to analyze: all, january, february, ... , june\n").lower()
-
-        if month in possible_months:
-            break
-        
-        print("Invalid month name. Please try again.")
-
-    # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-    possible_days: list = ["all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-    day: str = ""
-    while True:
-        day = input("Choose a day to analyze: all, monday, tuesday, ... sunday\n").lower()
-
-        if day in possible_days:
-            break
-        
-        print("Invalid day name. Please try again.")
+        return value
+    
+    city = get_input("Choose a city to analyze: Chicago, New York City, Washington\n", CITY_DATA.keys())
+    month = get_input("Choose a month to analyze: all, january, february, ... , june\n", ["all", "january", "february", "march", "april", "may", "june"])
+    day = get_input("Choose a day to analyze: all, monday, tuesday, ... sunday\n", ["all", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"])
 
     print("-" * 40)
     return city, month , day
